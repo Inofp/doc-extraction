@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MLFLOW_TRACKING_URI=file:/app/mlruns
+      - MLFLOW_EXPERIMENT=doc_extraction
+      - USE_LLM_REPAIR=true
+      - MIN_CONFIDENCE_FOR_LLM=0.55
+      - PREFER_PADDLEOCR=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mlruns:/app/mlruns
+      - ./data:/app/data
